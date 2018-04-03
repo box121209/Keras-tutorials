@@ -1,0 +1,842 @@
+############################################################
+# 				model training: code
+############################################################
+
+n_epoch = 5
+n_iteration = 20
+
+for iteration in range(1, n_iteration):
+    print()
+    print('-' * 50)
+    print('Iteration', iteration)
+    model.fit(X, y, batch_size=128, nb_epoch=n_epoch)
+    
+    start_index = random.randint(0, n_train - maxlen - 1)
+
+    for temperature in [0.2, 0.5, 1.0]:
+        print()
+        print('----- temperature:', temperature)
+
+        generated = ''
+        sentence = text_train[start_index: start_index + maxlen]
+        generated += sentence
+        print('----- Generating with seed: "' + sentence + '"')
+        sys.stdout.write(generated)
+
+        for i in range(200):
+            x = np.zeros((1, maxlen, len(chars)))
+            for t, char in enumerate(sentence):
+                x[0, t, char_indices[char]] = 1.
+
+            preds = model.predict(x, verbose=0)[0]
+            next_index = sample(preds, temperature)
+            next_char = indices_char[next_index]
+
+            generated += next_char
+            sentence = sentence[1:] + next_char
+
+            sys.stdout.write(next_char)
+            sys.stdout.flush()
+        print()
+
+
+############################################################
+# 				model training: verbose output
+############################################################
+
+--------------------------------------------------
+Iteration 1
+Epoch 1/5
+185893/185893 [==============================] - 325s - loss: 2.9669   
+Epoch 2/5
+185893/185893 [==============================] - 323s - loss: 2.4787   
+Epoch 3/5
+185893/185893 [==============================] - 311s - loss: 2.3315   
+Epoch 4/5
+185893/185893 [==============================] - 324s - loss: 2.2403   
+Epoch 5/5
+185893/185893 [==============================] - 322s - loss: 2.1658   
+
+----- temperature: 0.2
+----- Generating with seed: "ide me with a dead m"
+ide me with a dead mane the that the hath that and the that the cound the shath the that the shere the that that hit the that the with the that the mane the be the that the sand and and the that mand the manter the the t
+
+----- temperature: 0.5
+----- Generating with seed: "ide me with a dead m"
+ide me with a dead mase be thar the sting ming the bes the hourt send ther crouce on thas that the ther would a cound the sore ho king his your betwy ther wind conder for in prine
+dore the gode and thas a with in and his
+
+----- temperature: 1.0
+----- Generating with seed: "ide me with a dead m"
+ide me with a dead me
+cotantimy arroire:
+lem, thle hist ser loanc: you staal'ss hy rurin rifhers eyar siand,
+gorme.
+
+swimh darot ty i cours asbuc?
+felsis sgofy brot'e yit in,
+marris of golr eay ta sot thaf choumakl.
+cook
+
+--------------------------------------------------
+Iteration 2
+Epoch 1/5
+185893/185893 [==============================] - 324s - loss: 2.1040   
+Epoch 2/5
+185893/185893 [==============================] - 323s - loss: 2.0540   
+Epoch 3/5
+185893/185893 [==============================] - 323s - loss: 2.0159   
+Epoch 4/5
+185893/185893 [==============================] - 320s - loss: 1.9808   
+Epoch 5/5
+185893/185893 [==============================] - 310s - loss: 1.9496   
+
+----- temperature: 0.2
+----- Generating with seed: "my breast
+by some vi"
+my breast
+by some ville the thise be the come to he the manter in the mean the the come to be and i so my lord,
+the mear the sear i to the the to the sear the bear the the tore to the their the come the meare to the fort
+
+----- temperature: 0.5
+----- Generating with seed: "my breast
+by some vi"
+my breast
+by some vinging sone lage san a poon shall the spean to seir prome is thee to the to dunting whith the the consent as have to will sant the come and the mease she my land i at to the louch the beath'd what my s
+
+----- temperature: 1.0
+----- Generating with seed: "my breast
+by some vi"
+my breast
+by some vicgess ewuto.
+
+nortous:
+that my wondth: o pire,
+a vinshems rart!
+the bight, stay'sow norle a caute?
+the puncither, pre'teln hing, the count centbiy whyar morkether.
+
+hing norerlipare:
+well my deele.
+
+w
+
+--------------------------------------------------
+Iteration 3
+Epoch 1/5
+185893/185893 [==============================] - 324s - loss: 1.9225   
+Epoch 2/5
+185893/185893 [==============================] - 324s - loss: 1.8983   
+Epoch 3/5
+185893/185893 [==============================] - 325s - loss: 1.8765   
+Epoch 4/5
+185893/185893 [==============================] - 322s - loss: 1.8574   
+Epoch 5/5
+185893/185893 [==============================] - 309s - loss: 1.8381   
+
+----- temperature: 0.2
+----- Generating with seed: "things divine, are i"
+things divine, are i mare the sole the mare the mere the some the make the tome to the to me the that and the bear in the man the come the thought the the pore, the shall the soul the san the that the some to he is him t
+
+----- temperature: 0.5
+----- Generating with seed: "things divine, are i"
+things divine, are i lew shall the moder your prey the wain the shall, ous led a ploose so king the part say the armer sad,
+what this now for the made of the and at come,
+that they are his the cite the four the nalk prov
+
+----- temperature: 1.0
+----- Generating with seed: "things divine, are i"
+things divine, are i picoul be the hines; dereest sell, our bicchast no louthdy,
+not wishing knoudy nor flilb in bratk;
+colfarum arlut's mumane;
+o ksergo for you toe; chery, and viclatce have sceaking marus, sway this st
+
+--------------------------------------------------
+Iteration 4
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.8231   
+Epoch 2/5
+185893/185893 [==============================] - 322s - loss: 1.8071   
+Epoch 3/5
+185893/185893 [==============================] - 325s - loss: 1.7919   
+Epoch 4/5
+185893/185893 [==============================] - 323s - loss: 1.7764   
+Epoch 5/5
+185893/185893 [==============================] - 310s - loss: 1.7647   
+
+----- temperature: 0.2
+----- Generating with seed: "seth neither of us w"
+seth neither of us with the now the tongues the sear and the come the dears to the some the bear to peer thee the man the than the thought the beat the some the sone the took and lord and such man the some the some to ma
+
+----- temperature: 0.5
+----- Generating with seed: "seth neither of us w"
+seth neither of us with stond.
+
+king richard iii:
+sose it forth me to do the come the nome.
+
+remucking:
+on the god be momy to for thear his poter in head they the sotering from the foul levering dobe to plote,
+then so st
+
+----- temperature: 1.0
+----- Generating with seed: "seth neither of us w"
+seth neither of us word o mestar-night?
+
+dakenus:
+ay; sir, now were face is nouxhs denrother is not bloods ib my tome mignod, dicharter, that more test resughs,
+ficting word, i tould hee stull,
+god an my streagen bese,
+o
+
+--------------------------------------------------
+Iteration 5
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.7535   
+Epoch 2/5
+185893/185893 [==============================] - 317s - loss: 1.7433   
+Epoch 3/5
+185893/185893 [==============================] - 317s - loss: 1.7306   
+Epoch 4/5
+185893/185893 [==============================] - 316s - loss: 1.7200   
+Epoch 5/5
+185893/185893 [==============================] - 306s - loss: 1.7114   
+
+----- temperature: 0.2
+----- Generating with seed: " how he mammocked
+it"
+ how he mammocked
+it is the may this some to the art the senverer the with the stread the conders to the bane the sone and mare and the shall the part thou command the sore the beard the led to be the poor the shall the 
+
+----- temperature: 0.5
+----- Generating with seed: " how he mammocked
+it"
+ how he mammocked
+it stean is the peart be come thou bed the rome,
+and with the dound, under his home,
+the bring and hath seed a noble as unsorte that the forth under that so here a night,
+diver a worther than the blood,
+
+----- temperature: 1.0
+----- Generating with seed: " how he mammocked
+it"
+ how he mammocked
+it think the may bay lichings this raheuth
+shall do bayor some reswers,
+but, i sin the fearrous,
+or curton, thrid with all notozed poper'd,
+from by in goas shrobred, whichs not's that a and
+the newcer. 
+
+--------------------------------------------------
+Iteration 6
+Epoch 1/5
+185893/185893 [==============================] - 306s - loss: 1.7011   
+Epoch 2/5
+185893/185893 [==============================] - 306s - loss: 1.6931   
+Epoch 3/5
+185893/185893 [==============================] - 306s - loss: 1.6850   
+Epoch 4/5
+185893/185893 [==============================] - 306s - loss: 1.6763   
+Epoch 5/5
+185893/185893 [==============================] - 307s - loss: 1.6714   
+
+----- temperature: 0.2
+----- Generating with seed: "e, ambitious past al"
+e, ambitious past all the all the word the stand the soul the would the mander and the sead to the some to the some soul the strand,
+the tome to mark i shall be the shall the more to the tongue in the man,
+the tome to co
+
+----- temperature: 0.5
+----- Generating with seed: "e, ambitious past al"
+e, ambitious past all her his offers,
+for the lock the face to sil me,
+i cannot be with mark the rame, that the tome in the hasting to lay, what thes the know as the wither friends,
+the trubton how, the hears my most may
+
+----- temperature: 1.0
+----- Generating with seed: "e, ambitious past al"
+e, ambitious past all-are,
+epsaces, delwipuried
+up of him at full, you sdracter.
+tum than boustwry, har their mouves wereufes and they blooder. that gry, then itster art the oy before laterd
+hather plives fair fear of la
+
+--------------------------------------------------
+Iteration 7
+Epoch 1/5
+185893/185893 [==============================] - 306s - loss: 1.6625   
+Epoch 2/5
+185893/185893 [==============================] - 306s - loss: 1.6542   
+Epoch 3/5
+185893/185893 [==============================] - 306s - loss: 1.6475   
+Epoch 4/5
+185893/185893 [==============================] - 307s - loss: 1.6401   
+Epoch 5/5
+185893/185893 [==============================] - 307s - loss: 1.6325   
+
+----- temperature: 0.2
+----- Generating with seed: "e hence;
+and now in "
+e hence;
+and now in the poor to show the boind the man the beat to the say the command and the some and the world the shall the poor to the both me the tome,
+and the sin the so the fortune the more,
+and he that the house
+
+----- temperature: 0.5
+----- Generating with seed: "e hence;
+and now in "
+e hence;
+and now in the fall the present would the patients.
+
+duke of aumerle:
+for some she than the dught her all for thought the fortune me to ever the bide;
+and some do how the eadul condent at i this and me i come, m
+
+----- temperature: 1.0
+----- Generating with seed: "e hence;
+and now in "
+e hence;
+and now in their tear
+ot hering be most chand!
+some the litht parlon it;
+and my, that dissences, if i do love
+we scould lord: my offer my patiend
+of our field a to say.
+in they sodetest king.
+i bili wore is thy 
+
+--------------------------------------------------
+Iteration 8
+Epoch 1/5
+185893/185893 [==============================] - 324s - loss: 1.6269   
+Epoch 2/5
+185893/185893 [==============================] - 323s - loss: 1.6214   
+Epoch 3/5
+185893/185893 [==============================] - 322s - loss: 1.6148   
+Epoch 4/5
+185893/185893 [==============================] - 323s - loss: 1.6103   
+Epoch 5/5
+185893/185893 [==============================] - 315s - loss: 1.6045   
+
+----- temperature: 0.2
+----- Generating with seed: "
+
+gloucester:
+even s"
+
+
+gloucester:
+even shall the world
+the shall the sender, the present and me the both that the command the stranger the soul that the sease the country to shall the sender, be the shall and the tore shall the rear mark th
+
+----- temperature: 0.5
+----- Generating with seed: "
+
+gloucester:
+even s"
+
+
+gloucester:
+even sould and their and the love,
+and did not and the shall do me have the noble strange,
+and sweet hath soundeds in the lighters.
+
+gloucester:
+remam to the son the own pour marrous power, thou stand the e
+
+----- temperature: 1.0
+----- Generating with seed: "
+
+gloucester:
+even s"
+
+
+gloucester:
+even some some him strong a yoring's aruser
+with thiir i vindalt at swrabbles,
+that now, may as owe.
+
+mercutio:
+nets, with onour-beeners on in i mewler
+no stoutt to
+depence the efcomquat o must, both ane be
+
+--------------------------------------------------
+Iteration 9
+Epoch 1/5
+185893/185893 [==============================] - 310s - loss: 1.5993   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.5958   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.5904   
+Epoch 4/5
+185893/185893 [==============================] - 309s - loss: 1.5831   
+Epoch 5/5
+185893/185893 [==============================] - 309s - loss: 1.5800   
+
+----- temperature: 0.2
+----- Generating with seed: "ths with sweetmeats "
+ths with sweetmeats the brother come,
+the sould the pronot the heart that the beans the troubler the last the common the prove the sast a sellest the come,
+the gods the commind to the man the shall and the tongue to the 
+
+----- temperature: 0.5
+----- Generating with seed: "ths with sweetmeats "
+ths with sweetmeats and be the patting son.
+
+dolt coms:
+than thou so, and since of a stander be made the beands, sime of the course the man that more the mark, coust and wally enter,
+for you say, but he sould to be the c
+
+----- temperature: 1.0
+----- Generating with seed: "ths with sweetmeats "
+ths with sweetmeats did that's heart:
+as leaves, flome:
+never i thy benost'd
+it as do lase ly, o list hot it the generon;
+very me with back the wad of paces
+arine, her, oly man; o he be a pohe leher that not
+that swapce 
+
+--------------------------------------------------
+Iteration 10
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.5745   
+Epoch 2/5
+185893/185893 [==============================] - 309s - loss: 1.5713   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.5652   
+Epoch 4/5
+185893/185893 [==============================] - 309s - loss: 1.5650   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.5564   
+
+----- temperature: 0.2
+----- Generating with seed: " face?
+thou wilt fal"
+ face?
+thou wilt fall mercutio to the bost to the tender the compant that the serves and the bane to see the compant the hime and make the strength me the consuls and her than the homar to the sone here and some man,
+our
+
+----- temperature: 0.5
+----- Generating with seed: " face?
+thou wilt fal"
+ face?
+thou wilt fall besend the may,
+the mind of the gods would which his son the words with the birthter me with consemt and the love the with.
+
+duke of york:
+therefore of this the noble reasens to thou the reast they 
+
+----- temperature: 1.0
+----- Generating with seed: " face?
+thou wilt fal"
+ face?
+thou wilt fall deans and kind of horse,
+but fousen enhmous world; and, your kings's teash;
+there's that did dream's tell
+the ain to rife no'? that prott loek all, it, there that aboul.
+
+sicinius:
+the arn from me i
+
+--------------------------------------------------
+Iteration 11
+Epoch 1/5
+185893/185893 [==============================] - 308s - loss: 1.5531   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.5497   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.5466   
+Epoch 4/5
+185893/185893 [==============================] - 309s - loss: 1.5415   
+Epoch 5/5
+185893/185893 [==============================] - 309s - loss: 1.5397   
+
+----- temperature: 0.2
+----- Generating with seed: " do refuse it;
+and s"
+ do refuse it;
+and so marry the thrist the consuls and the trings and man the prince the sease that have the presest the pray see the same in his offer,
+and then the love the part the sead to come to the may the shall we
+
+----- temperature: 0.5
+----- Generating with seed: " do refuse it;
+and s"
+ do refuse it;
+and sir have have contens to have a score,
+so loved the consord,
+be the with love, the course, the part'd his death, what thou that way i should i the dare
+the trungation, bego the day, i have no doth me h
+
+----- temperature: 1.0
+----- Generating with seed: " do refuse it;
+and s"
+ do refuse it;
+and sfire a arsein woman gaquse of my gries?
+
+menenius:
+rekenrien lichand, which your more now wither, but bancrass, we and of must stands not.
+
+romeo:
+i can rangs, the pillisubes, me wilt well and you the
+
+--------------------------------------------------
+Iteration 12
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.5317   
+Epoch 2/5
+185893/185893 [==============================] - 309s - loss: 1.5302   
+Epoch 3/5
+185893/185893 [==============================] - 309s - loss: 1.5278   
+Epoch 4/5
+185893/185893 [==============================] - 309s - loss: 1.5256   
+Epoch 5/5
+185893/185893 [==============================] - 309s - loss: 1.5214   
+
+----- temperature: 0.2
+----- Generating with seed: "at he is dead.
+the k"
+at he is dead.
+the king her world the bear and stand the bear the stone.
+
+gloucester:
+then the both to the tongues the stand the command in the should the throunds and the stand the battle with the bost.
+
+coriolanus:
+i s
+
+----- temperature: 0.5
+----- Generating with seed: "at he is dead.
+the k"
+at he is dead.
+the king such me say,
+and not for the haw,
+enterfoun an this hands
+our doth heart thou talk, the commind thus so late and frest the country,
+our king and ind heaveness have the bear the world,
+who were my 
+
+----- temperature: 1.0
+----- Generating with seed: "at he is dead.
+the k"
+at he is dead.
+the king of beptien,
+in me, lord with thin eneamines.
+
+king richard ii:
+then as this -bahes hastings! bed enter'ds proses on in a amged: in you the king that wlane!
+
+lord fir?
+
+coryorauser:
+you neest censk
+
+--------------------------------------------------
+Iteration 13
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.5196   
+Epoch 2/5
+185893/185893 [==============================] - 309s - loss: 1.5149   
+Epoch 3/5
+185893/185893 [==============================] - 309s - loss: 1.5110   
+Epoch 4/5
+185893/185893 [==============================] - 308s - loss: 1.5059   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.5014   
+
+----- temperature: 0.2
+----- Generating with seed: "e people do admit yo"
+e people do admit you have me the mind that the shall the bear him the reath the bear the son the sin and the gods in their trouble that the sentious soul and soul the troubloug and me the sent the soul
+and stand the tow
+
+----- temperature: 0.5
+----- Generating with seed: "e people do admit yo"
+e people do admit you to the gind,
+i have be the second and this hard, then he reto sunseld for me the prayers of their to a stringther comes the man the soldiers to what he from the bott the trayunos of my greater beat 
+
+----- temperature: 1.0
+----- Generating with seed: "e people do admit yo"
+e people do admit your procepelters, pool king lipent; they would henperay,
+to wracks my nothen trie; sins, condly he would with lead it in of by stant
+and to his fortuce for me,
+poar; and i tryan in that wast sighs, wha
+
+--------------------------------------------------
+Iteration 14
+Epoch 1/5
+185893/185893 [==============================] - 309s - loss: 1.5011   
+Epoch 2/5
+185893/185893 [==============================] - 309s - loss: 1.4984   
+Epoch 3/5
+185893/185893 [==============================] - 310s - loss: 1.4954   
+Epoch 4/5
+185893/185893 [==============================] - 309s - loss: 1.4943   
+Epoch 5/5
+185893/185893 [==============================] - 312s - loss: 1.4922   
+
+----- temperature: 0.2
+----- Generating with seed: "r wife; if she conve"
+r wife; if she convent the court and the common that the shall and the with the prome and may the some do the commantion and the death to see the mother, what is the base and the thand the soul and pray the morning the s
+
+----- temperature: 0.5
+----- Generating with seed: "r wife; if she conve"
+r wife; if she convent and the court that remember him,
+that he the land the fanet the lich,
+and this thank for him the compants, and and thy brother to the wind
+that you shall may the grace to he sent the brother prove 
+
+----- temperature: 1.0
+----- Generating with seed: "r wife; if she conve"
+r wife; if she convert the grounder will comrend your noble ettester,
+and my barthd onpurreed
+potword laty
+prove and cettruton:
+you one mine egl.
+
+first murderer:
+ferler, do but you scound?
+
+coriolanus:
+come, do hood to 
+
+--------------------------------------------------
+Iteration 15
+Epoch 1/5
+185893/185893 [==============================] - 308s - loss: 1.4872   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.4871   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.4821   
+Epoch 4/5
+185893/185893 [==============================] - 310s - loss: 1.4787   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.4794   
+
+----- temperature: 0.2
+----- Generating with seed: "mile in france.
+
+que"
+mile in france.
+
+queen elizabeth:
+and then the bento there they shall the such condemes of the band and prove thee to the consence to the sone the courtest the beat soul to the same and the senien, that the beard the lov
+
+----- temperature: 0.5
+----- Generating with seed: "mile in france.
+
+que"
+mile in france.
+
+queen elizabeth:
+what good that well that shall the finger things is not ot be no death.
+
+henry bolingbroke:
+stote to with ever be toor
+and the fear to he at marcius.
+
+king richard ii:
+what tought the si
+
+----- temperature: 1.0
+----- Generating with seed: "mile in france.
+
+que"
+mile in france.
+
+queen elizabeth:
+no
+the heart'd uncle man them to his beath.
+
+brouns:
+re
+some good live busclion of sad forming med: who heazen goem- where as mackizes are.
+
+lord commanus:
+be ficlith arsire advame wathi
+
+--------------------------------------------------
+Iteration 16
+Epoch 1/5
+185893/185893 [==============================] - 310s - loss: 1.4759   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.4729   
+Epoch 3/5
+185893/185893 [==============================] - 309s - loss: 1.4721   
+Epoch 4/5
+185893/185893 [==============================] - 308s - loss: 1.4693   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.4651   
+
+----- temperature: 0.2
+----- Generating with seed: "d you?
+
+marcius:
+wil"
+d you?
+
+marcius:
+will the the beat sold,
+that that the bear the stand the strice to the counter and man, heart the state to the soul to be the sease that the commands in the more to my true will shall be so do the compan
+
+----- temperature: 0.5
+----- Generating with seed: "d you?
+
+marcius:
+wil"
+d you?
+
+marcius:
+will all the love to part her to the tare have canst a heart that the more but speak in the wife in the fire to all enence, what i do see the will of the unedies and him my blood;
+that i thank thee to th
+
+----- temperature: 1.0
+----- Generating with seed: "d you?
+
+marcius:
+wil"
+d you?
+
+marcius:
+will you we there love but will caby; to life strage;
+peace comisae of the matter,
+when his heard:
+i have coms to make hath not of what these hand?:
+where when dead tears.
+
+brouthir:
+
+buckingham:
+ly, des
+
+--------------------------------------------------
+Iteration 17
+Epoch 1/5
+185893/185893 [==============================] - 308s - loss: 1.4629   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.4591   
+Epoch 3/5
+185893/185893 [==============================] - 309s - loss: 1.4571   
+Epoch 4/5
+185893/185893 [==============================] - 308s - loss: 1.4564   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.4554   
+
+----- temperature: 0.2
+----- Generating with seed: "h myself,
+will maint"
+h myself,
+will maint thee have the dear and so that shall shall be so that the commant that her stand to the part the common that the such best to the world the shall we shall come the stand with me his son, the commant 
+
+----- temperature: 0.5
+----- Generating with seed: "h myself,
+will maint"
+h myself,
+will maint thee have my trust the fore the gods there would come in the time his worke the sorrow have the proud counsers:
+so my lord, and your news, where is love the sight of his feart and say,
+for the being 
+
+----- temperature: 1.0
+----- Generating with seed: "h myself,
+will maint"
+h myself,
+will mainty srown'd loed is the guilt,
+the cat'st, if the chorte have thy admit!
+
+buckingham:
+are when the atters more daid at him, i mater
+will to adne
+rows and i enevined poad's of that, if i male bash we it 
+
+--------------------------------------------------
+Iteration 18
+Epoch 1/5
+185893/185893 [==============================] - 308s - loss: 1.4531   
+Epoch 2/5
+185893/185893 [==============================] - 308s - loss: 1.4501   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.4505   
+Epoch 4/5
+185893/185893 [==============================] - 308s - loss: 1.4473   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.4442   
+
+----- temperature: 0.2
+----- Generating with seed: "hat is that?
+
+brutus"
+hat is that?
+
+brutus:
+what shall shall be may the bring to be the sease the soul
+to be the part that the bear the soul
+and her head is to the proter to deed the bear the soul that the gods that the forster the soul with 
+
+----- temperature: 0.5
+----- Generating with seed: "hat is that?
+
+brutus"
+hat is that?
+
+brutus:
+why the charged the noster with the bard wonder and satests.
+
+cominius:
+ay the bear the death of the heart that stay with this fall at him as a ansing blend whous it that the common the sear, i say,
+
+----- temperature: 1.0
+----- Generating with seed: "hat is that?
+
+brutus"
+hat is that?
+
+brutus:
+thein concl.ans!
+i in thy tongul lie; that on an had permip'd
+it might so may of becume thy pows.
+
+mercutio:
+matus of the mat.
+
+henry bolingbroke:
+there be the duke the viil presence this,
+or woo wi
+
+--------------------------------------------------
+Iteration 19
+Epoch 1/5
+185893/185893 [==============================] - 308s - loss: 1.4448   
+Epoch 2/5
+185893/185893 [==============================] - 309s - loss: 1.4441   
+Epoch 3/5
+185893/185893 [==============================] - 308s - loss: 1.4401   
+Epoch 4/5
+185893/185893 [==============================] - 308s - loss: 1.4384   
+Epoch 5/5
+185893/185893 [==============================] - 308s - loss: 1.4360   
+
+----- temperature: 0.2
+----- Generating with seed: "ous of your honour: "
+ous of your honour: the precest of company,
+that when they that they shall should to see the being and the more to see the father, the common that the towars and the sent and speak to shall be the command that i shall be
+
+----- temperature: 0.5
+----- Generating with seed: "ous of your honour: "
+ous of your honour: the gods have bamed the honour master to make the asport,
+or shede that he some prive thee,
+seet were prove a aster in prince the bebere england,
+where do the eard of man that should so john
+a litingh
+
+----- temperature: 1.0
+----- Generating with seed: "ous of your honour: "
+ous of your honour: i
+suspet cotvons and this cols, and
+freliong, what say.
+
+pitinius:
+sir clouke a qratse son in your birth,
+doth clarquil is, and mark theator, peace?
+age to think, made good fram your earth;
+with your 
